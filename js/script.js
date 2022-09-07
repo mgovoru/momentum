@@ -3,21 +3,17 @@ let time = document.querySelector('.time');
 let calendar = document.querySelector('.date');
 let greeting = document.querySelector('.greeting');
 let greetingContainer = document.querySelector('.greeting-container');
-let name = document.querySelector('.name');
-let body = document.querySelector('body');
+let body = document.querySelector('.tv');
 let slideNext = document.querySelector('.slide-next');
 let slidePrev = document.querySelector('.slide-prev');
-const weatherIcon = document.querySelector('.weather-icon');
+const weatherIcon = document.querySelector('.weather__icon');
 const temperature = document.querySelector('.temperature');
-const weatherDescription = document.querySelector('.weather-description'); let city = document.querySelector('.city');
+const weatherDescription = document.querySelector('.weather__description'); let city = document.querySelector('.city');
 let wind = document.querySelector('.wind');
 let humidity = document.querySelector('.humidity');
 let quote = document.querySelector('.quote');
 let author = document.querySelector('.author');
 let change = document.querySelector('.change-quote');
-let play = document.querySelector('.play-music');
-let playPrevButton = document.querySelector('.play-prev');
-let playNextButton = document.querySelector('.play-next');
 let playListContainer = document.querySelector('.play-list');
 let setting = document.querySelector('.setting');
 let pop = document.querySelector('.pop');
@@ -29,11 +25,9 @@ let footerQuote = document.querySelector('.footer__quote');
 let player = document.querySelector('.player');
 let namePlay = document.querySelector('.name-play');
 let volumeButton = document.querySelector('.volume-button');
-let bgNum;
+let cake = document.querySelector('.cake');
 let ruLang = false;
 let enLang = true;
-
-console.log(switcherInput);
 
 //localStorage.clear();
 // импорт плейлиста
@@ -60,7 +54,7 @@ function getTimeofDay(hour) {
 let date = new Date();
 let hours = date.getHours();
 let timeofDay = getTimeofDay(hours);
-city.value = `Минск`;
+city.value = `Yekaterinburg`;
 
 // показываем время
 function showTime() {
@@ -88,20 +82,18 @@ function showTime() {
 	setTimeout(showTime, 1000);
 	showGreeting();
 }
+
 showTime();
 
 
 let massiveChecked = [];
 let newObj = [];
-console.log(switcherInput);
 
 
-// запоминаем город и имя
+// запоминаем город
 function setLocalStorage() {
-	localStorage.setItem('name', name.value);
 	localStorage.setItem('city', city.value);
 	for (let ll = 0; ll < switcherInput.length; ll++) { massiveChecked[ll] = switcherInput[ll].checked; }
-	console.log(massiveChecked);
 	localStorage['mykey'] = JSON.stringify(massiveChecked);
 }
 
@@ -109,9 +101,6 @@ function setLocalStorage() {
 window.addEventListener('beforeunload', setLocalStorage);
 
 function getLocalStorage() {
-	if (localStorage.getItem('name')) {
-		name.value = localStorage.getItem('name');
-	}
 	if (localStorage.getItem('city')) {
 		city.value = localStorage.getItem('city');
 	}
@@ -122,64 +111,71 @@ function getLocalStorage() {
 			let event = new Event('change');
 			switcherInput[li].dispatchEvent(event);
 		}
-		console.log(newObj);
 	}
 }
 window.addEventListener('load', getLocalStorage);
 
 
-// определяем случайное число
-function getRandomNum() {
-	return Math.floor(Math.random() * 20);
-}
-
-bgNum = getRandomNum();
-
 // функции пролистывая слайдов вперед и назад
 function getSlideNext() {
-	bgNum = bgNum + 1;
-	if (bgNum > 20) { bgNum = 1; }
-	setBg();
+	if (bgNum != 0) {
+		bgNum++;
+		setBg();
+		if (bgNum > 21) { bgNum = 1; }
+	}
+	else { bgNum = 1; setBg(); }
 }
 function getSlidePrev() {
-	bgNum = bgNum - 1;
-	if (bgNum < 1) { bgNum = 20; }
-	setBg();
+	if (bgNum != 0) {
+		bgNum--;
+		setBg();
+		if (bgNum < 0) { bgNum = 21; }
+	}
+	else { bgNum = 21; setBg(); }
+
 }
 
 // проверяем из какого источника фотографии
 slideNext.addEventListener('click', () => {
-	if (!switcherInput[7].checked) { getSlideNext(); }
-	else { getLinkToImage(); }
-	if (!switcherInput[8].checked) { getSlideNext(); }
-	else { getLinkToImageFlickr(); }
+	if ((!switcherInput[7].checked) && (!switcherInput[8].checked)) {
+		getSlideNext();
+	}
+	if (switcherInput[7].checked) {
+		getLinkToImage();
+	}
+	if (switcherInput[8].checked) {
+		getLinkToImageFlickr();
+	}
 });
 
 slidePrev.addEventListener('click', () => {
-	if (!switcherInput[7].checked) { getSlidePrev(); }
-	else { getLinkToImage(); }
-	if (!switcherInput[8].checked) { getSlidePrev(); }
-	else { getLinkToImageFlickr(); }
+	if ((!switcherInput[7].checked) && (!switcherInput[8].checked)) {
+		getSlidePrev();
+	}
+	if (switcherInput[7].checked) {
+		getLinkToImage();
+	}
+	if (switcherInput[8].checked) {
+		getLinkToImageFlickr();
+	}
 });
-let bNum;
 
+let bgNum = 0;
+let opacityCake = 0;
 
-// функция, показывающая фотографии из локального источника
 function setBg() {
-	if ((bgNum < 10) && (bgNum != 0)) { bNum = String(bgNum).padStart(2, 0); }
-	if (bgNum >= 10) { bNum = bgNum; }
-	if (bgNum == 0) { bgNum = 1; bNum = String(bgNum).padStart(2, 0); }
 	let img = new Image();
-	let bodyurl = `url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeofDay}/${bNum}.jpg')`;
-	let bodyurll = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeofDay}/${bNum}.jpg`;
+	let bodyurl = `url('./assets/img/babies/${bgNum}.jpg')`;
+	let bodyurll = `./assets/img/babies/${bgNum}.jpg`;
 	img.src = bodyurll;
 	img.addEventListener('load', () => {
 		body.style.backgroundImage = bodyurl;
 	});
+	opacityCake = opacityCake + 0.1;
+	cake.style.cssText = `opacity: ${opacityCake}`;
 }
 
-setBg();
-let ln
+let ln;
 //функция получения погоды
 async function getWeather() {
 	if (ruLang == true) { ln = 'ru'; } else { ln = 'en'; }
@@ -193,7 +189,7 @@ async function getWeather() {
 		const res = await fetch(url);
 		const data = await res.json();
 		// не сработает
-		weatherIcon.className = 'weather-icon owf';
+		weatherIcon.className = 'weather__icon owf';
 		weatherIcon.classList.add(`owf-${data.weather[0].id}`);
 		temperature.textContent = `${Math.floor(data.main.temp)}°C`;
 		weatherDescription.textContent = data.weather[0].description;
@@ -245,97 +241,17 @@ change.addEventListener('click', () => {
 	getQuotes();
 });
 
-
-//обычный проигрыватель
-const audioNew = new Audio();
-let isPlay = false;
-
-let playNum = 0;
-
-
-function playAudio() {
-	audioNew.src = playList[playNum].src;
-	audioNew.currentTime = 0;
-	if (!isPlay) {
-		audioNew.play(); isPlay = true;
-		playLi[playNum].classList.add('item-active');
-	} else {
-		audioNew.pause(); isPlay = false;
-		playLi[playNum].classList.remove('item-active');
-	}
-}
-
-
-function toggleBtn() {
-	play.classList.toggle('pause-music');
-}
-play.addEventListener('click', toggleBtn);
-play.addEventListener('click', playAudio);
-
-
-
-
-
-//формирование плейлиста
-for (let i = 0; i < playList.length; i++) {
-	const li = document.createElement('li');
-	li.classList.add('play-item');
-	li.textContent = playList[i].title;
-	playListContainer.append(li);
-}
-let playLi = document.querySelectorAll('.play-item');
-
-for (let y = 0; y < playList.length; y++) {
-	playLi[y].addEventListener('click', () => {
-		{
-			playNum = y;
-			playAudio();
-		}
-	})
-}
-
-//функции для треков вперед и назад
-function playNext() {
-	playLi[playNum].classList.remove('item-active');
-	playNum = playNum + 1;
-	if (playNum > 9) { playNum = 0; }
-	isPlay = false;
-	playAudio();
-
-}
-function playPrev() {
-	playLi[playNum].classList.remove('item-active');
-	playNum = playNum - 1;
-	if (playNum < 0) { playNum = 9; }
-	isPlay = false;
-	playAudio();
-}
-playPrevButton.addEventListener('click', playPrev);
-playNextButton.addEventListener('click', playNext);
-
-audioNew.addEventListener("ended", function () {
-	playLi[playNum].classList.remove('item-active');
-	isPlay = false;
-	playNum = playNum + 1;
-	if (playNum == 10) { playNum = 0; }
-	console.log(playNum);
-	playAudio();
-})
-
 // фотографии из источника Unsplash
 
 async function getLinkToImage() {
 	let imgUnsplash = new Image();
-	let url = 'https://api.unsplash.com/photos/random?query=nature&client_id=_GKm-85EgvvGnsPpemOrhLZbu64Li5HoZyf1GY98QCk';
-	let urll = `url('https://api.unsplash.com/photos/random?query=nature&client_id=_GKm-85EgvvGnsPpemOrhLZbu64Li5HoZyf1GY98QCk')`;
+	let url = 'https://api.unsplash.com/photos/random?query=babies&client_id=_GKm-85EgvvGnsPpemOrhLZbu64Li5HoZyf1GY98QCk';
+	let urll = `url('https://api.unsplash.com/photos/random?query=babies&client_id=_GKm-85EgvvGnsPpemOrhLZbu64Li5HoZyf1GY98QCk')`;
 	const res = await fetch(url);
 	const datat = await res.json();
-	console.log(datat);
 	imgUnsplash.src = datat.urls.regular;
 	imgUnsplash.addEventListener('load', () => {
 		body.style.backgroundImage = `url(${imgUnsplash.src})`;
-		console.log(body.style.backgroundImage);
-		console.log(datat.urls.regular);
 	});
 }
 
@@ -343,17 +259,15 @@ async function getLinkToImage() {
 
 async function getLinkToImageFlickr() {
 	let imgFlickr = new Image();
-	let urlFlickr = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d69b5e2c05af4947127492602040536f&tags=nature&extras=url_l&format=json&nojsoncallback=1`;
-	let urllFlickr = `url('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d69b5e2c05af4947127492602040536f&tags=nature&extras=url_l&format=json&nojsoncallback=1')`;
+	let urlFlickr = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d69b5e2c05af4947127492602040536f&tags=babies&extras=url_l&format=json&nojsoncallback=1`;
+	let urllFlickr = `url('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d69b5e2c05af4947127492602040536f&tags=babies&extras=url_l&format=json&nojsoncallback=1')`;
 	const res = await fetch(urlFlickr);
 	const datat = await res.json();
-	console.log(datat.photos.photo);
 	let arr = datat.photos.photo;
 	let m = Math.floor(Math.random() * datat.photos.photo.length);
 	imgFlickr.src = arr[m].url_l;
 	imgFlickr.addEventListener('load', () => {
 		body.style.backgroundImage = `url(${arr[m].url_l})`;
-		console.log(body.style.backgroundImage);
 	});
 }
 
@@ -451,18 +365,24 @@ switcherInput[6].addEventListener("change", function () {
 	}
 })
 
-console.log(switcherInput[7]);
 switcherInput[7].addEventListener("change", function () {
 	if (switcherInput[7].checked) {
-		getLinkToImage(); console.log('новый фон'); switcherInput[9].checked = false; switcherInput[8].checked = false;
-	} else { setBg(); switcherInput[9].checked = true; }
+		getLinkToImage();
+		switcherInput[9].checked = false; switcherInput[8].checked = false;
+	} else {
+		setBg();
+		switcherInput[9].checked = true;
+	}
 })
 switcherInput[8].addEventListener("change", function () {
 	if (switcherInput[8].checked) {
-		getLinkToImageFlickr(); console.log('новый фон');
+		getLinkToImageFlickr();
 		switcherInput[7].checked = false;
 		switcherInput[9].checked = false;
-	} else { setBg(); switcherInput[9].checked = true; }
+	} else {
+		setBg();
+		switcherInput[9].checked = true;
+	}
 
 })
 switcherInput[9].addEventListener("change", function () {
@@ -478,17 +398,46 @@ switcherInput[9].addEventListener("change", function () {
 
 })
 
+
+
 //продвинутый проигрыватель
+let isPlay = false;
+let playNum = 0;
 const audioPlayer = document.querySelector(".audio-player");
 const audio = new Audio();
-
 audio.src = playList[playNum].src;
 namePlay.innerHTML = playList[playNum].title;
-console.log(playNum);
-// function audioPlay() {
 
+//формирование плейлиста
+for (let i = 0; i < playList.length; i++) {
+	const li = document.createElement('li');
+	li.classList.add('play-item');
+	li.textContent = playList[i].title;
+	playListContainer.append(li);
+}
+let playLi = document.querySelectorAll('.play-item');
 
-// }
+for (let y = 0; y < playList.length; y++) {
+	playLi[y].addEventListener('click', () => {
+		{
+			playNum = y;
+			audioPlay();
+		}
+	})
+}
+
+function audioPlay() {
+	audio.src = playList[playNum].src;
+	namePlay.innerHTML = playList[playNum].title;
+	if (!isPlay) {
+		audio.play(); isPlay = true;
+		playLi[playNum].classList.add('item-active');
+	} else {
+		audio.pause(); isPlay = false;
+		playLi[playNum].classList.remove('item-active');
+	}
+}
+
 
 audio.addEventListener(
 	"loadeddata",
@@ -506,9 +455,6 @@ let timeToSeek;
 const timeline = audioPlayer.querySelector(".timeline");
 timeline.addEventListener("click", e => {
 	const timelineWidth = window.getComputedStyle(timeline).width;
-	console.log(e.offsetX);
-	console.log(timelineWidth);
-	console.log(audio.duration);
 	timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
 	audio.currentTime = timeToSeek;
 }, false);
@@ -555,12 +501,10 @@ audio.addEventListener("ended", function () {
 	if (playNum == 10) { playNum = 0; }
 	audio.src = playList[playNum].src;
 	namePlay.innerHTML = playList[playNum].title;
-	console.log(playNum);
 	audio.play();
 })
 
 audioPlayer.querySelector(".volume-button").addEventListener("click", () => {
-	console.log(audio.muted);
 	if (!audio.muted) {
 		audio.muted = true;
 		volumeButton.classList.remove("source");

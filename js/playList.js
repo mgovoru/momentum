@@ -1,46 +1,21 @@
 const playList = [
 	{
-		title: 'Aqua Caelestis',
-		src: './assets/sounds/Aqua Caelestis.mp3',
-		duration: '00:58'
-	},
-	{
-		title: 'River Flows In You',
-		src: './assets/sounds/River Flows In You.mp3',
-		duration: '03:50'
-	},
-	{
-		title: 'BigBluesBed',
-		src: './assets/sounds/BigBluesBed.mp3',
-		duration: '03:14'
-	},
-	{
-		title: 'CloserToJazz',
-		src: './assets/sounds/CloserToJazz.mp3',
-		duration: '02:22'
-	},
-	{
-		title: 'Ennio Morricone',
-		src: './assets/sounds/Ennio Morricone.mp3',
-		duration: '01:37'
-	},
-	{
-		title: 'ILikePeanuts',
+		title: 'I Like Peanuts',
 		src: './assets/sounds/ILikePeanuts.mp3',
 		duration: '01:25'
 	},
 	{
-		title: 'JumpinBoogieWoogie',
+		title: 'Jumpin Boogie Woogie',
 		src: './assets/sounds/JumpinBoogieWoogie.mp3',
 		duration: '03:02'
 	},
 	{
-		title: 'OkeyDokeySmokey',
+		title: 'Okey Dokey Smokey',
 		src: './assets/sounds/OkeyDokeySmokey.mp3',
 		duration: '02:28'
 	},
 	{
-		title: 'SoloAcousticBlues',
+		title: 'Solo Acoustic Blues',
 		src: './assets/sounds/SoloAcousticBlues.mp3',
 		duration: '03:00'
 	},
@@ -49,5 +24,10 @@ const playList = [
 		src: './assets/sounds/Summer Wind.mp3',
 		duration: '01:50'
 	},
+	{
+		title: 'Romantic Folk Loop',
+		src: './assets/sounds/Summer Wind.mp3',
+		duration: '00:36'
+	}
 ]
 export default playList;
