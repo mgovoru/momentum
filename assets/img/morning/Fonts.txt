@@ -1,9 +1,0 @@
-Fonts used in this design:
-
-Font: Kaushan Script
-Author: Impallari Type
-Url: https://fonts.google.com/specimen/Kaushan+Script
-
-Font: Luckiest Guy
-Author: Astigmatic
-Url: https://fonts.google.com/specimen/Luckiest+Guy
