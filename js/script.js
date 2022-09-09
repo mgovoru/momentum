@@ -32,16 +32,29 @@ let enLang = true;
 //CANVAS
 let imgCanvas = new Image();
 
+function scaleToFill(img, ctx) {
+	// get the scale
+	var scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+	// get the top left position of the image
+	var x = (canvas.width / 2) - (img.width / 2) * scale;
+	var y = (canvas.height / 2) - (img.height / 2) * scale;
+	ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+}
+
 let canvas = document.querySelector('.wrapper__cover');
 let context = canvas.getContext("2d");
-canvas.width = document.body.clientWidth; //document.width is obsolete
- canvas.height = document.body.clientHeight;
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
+//canvas.width = document.body.clientWidth; //document.width is obsolete
+//canvas.height = document.body.clientHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 imgCanvas.onload = function () {
-	context.drawImage(imgCanvas, 0, 0, canvas.width, canvas.height); // drawImage(img, x, y);
+	// context.drawImage(imgCanvas, 0, 0, canvas.width, canvas.height);
+	scaleToFill(this, context);
+
+	// drawImage(img, x, y);
 }
 imgCanvas.src = './assets/img/1.png';
+// canvas.style.cssText = `object-fit:cover`;
 
 //localStorage.clear();
 // импорт плейлиста
@@ -144,7 +157,8 @@ function getSlideNext() {
 	else {
 		bgNum = 1; setBg(); opacityCake = opacityCake + 0.1;
 		cake.style.cssText = `opacity: ${opacityCake}`;
-		cake.style.backgroundImage = 'url(./assets/img/3.png)'; }
+		cake.style.backgroundImage = 'url(./assets/img/3.png)';
+	}
 }
 function getSlidePrev() {
 	if (bgNum != 0) {
