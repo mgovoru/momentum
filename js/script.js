@@ -205,9 +205,11 @@ function setBg() {
 	// canvas.height = 300;
 	//let bodyurl = `url('./assets/img/babies/${bgNum}.jpg')`;
 	let bodyurll = `./assets/img/babies/${bgNum}.jpg`;
+	var x = (canvas.width / 2) - (620 / 2);
+	var y = (canvas.height / 2) - (520 / 2);
 	img.onload = function () {
 		//contextTv.drawImage(img, 0, 0, 600, 400);
-		context.drawImage(img, 650, 230, 620, 300);// drawImage(img, x, y);
+		context.drawImage(img, x, y, 620, 340);// drawImage(img, x, y);
 	}
 	img.src = bodyurll;
 	// img.addEventListener('load', () => {
