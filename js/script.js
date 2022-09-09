@@ -29,6 +29,20 @@ let cake = document.querySelector('.cake');
 let ruLang = false;
 let enLang = true;
 
+//CANVAS
+let imgCanvas = new Image();
+
+let canvas = document.querySelector('.wrapper__cover');
+let context = canvas.getContext("2d");
+canvas.width = document.body.clientWidth; //document.width is obsolete
+ canvas.height = document.body.clientHeight;
+// canvas.width = window.innerWidth;
+// canvas.height = window.innerHeight;
+imgCanvas.onload = function () {
+	context.drawImage(imgCanvas, 0, 0, canvas.width, canvas.height); // drawImage(img, x, y);
+}
+imgCanvas.src = './assets/img/1.png';
+
 //localStorage.clear();
 // импорт плейлиста
 import playList from './playList.js';
@@ -88,7 +102,8 @@ showTime();
 
 let massiveChecked = [];
 let newObj = [];
-
+let bgNum = 0;
+let opacityCake = 0;
 
 // запоминаем город
 function setLocalStorage() {
@@ -121,9 +136,15 @@ function getSlideNext() {
 	if (bgNum != 0) {
 		bgNum++;
 		setBg();
+		opacityCake = opacityCake + 0.1;
+		cake.style.cssText = `opacity: ${opacityCake}`;
+		cake.style.backgroundImage = 'url(./assets/img/3.png)';
 		if (bgNum > 21) { bgNum = 1; }
 	}
-	else { bgNum = 1; setBg(); }
+	else {
+		bgNum = 1; setBg(); opacityCake = opacityCake + 0.1;
+		cake.style.cssText = `opacity: ${opacityCake}`;
+		cake.style.backgroundImage = 'url(./assets/img/3.png)'; }
 }
 function getSlidePrev() {
 	if (bgNum != 0) {
@@ -160,19 +181,25 @@ slidePrev.addEventListener('click', () => {
 	}
 });
 
-let bgNum = 0;
-let opacityCake = 0;
+
 
 function setBg() {
 	let img = new Image();
-	let bodyurl = `url('./assets/img/babies/${bgNum}.jpg')`;
+	// let canvas = document.querySelector('.wrapper__tv');
+	// let contextTv = canvas.getContext("2d");
+	// canvas.width = 620; 
+	// canvas.height = 300;
+	//let bodyurl = `url('./assets/img/babies/${bgNum}.jpg')`;
 	let bodyurll = `./assets/img/babies/${bgNum}.jpg`;
+	img.onload = function () {
+		//contextTv.drawImage(img, 0, 0, 600, 400);
+		context.drawImage(img, 650, 230, 620, 300);// drawImage(img, x, y);
+	}
 	img.src = bodyurll;
-	img.addEventListener('load', () => {
-		body.style.backgroundImage = bodyurl;
-	});
-	opacityCake = opacityCake + 0.1;
-	cake.style.cssText = `opacity: ${opacityCake}`;
+	// img.addEventListener('load', () => {
+	// 	body.style.backgroundImage = bodyurl;
+	// });
+
 }
 
 let ln;
