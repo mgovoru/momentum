@@ -2,7 +2,6 @@
 let time = document.querySelector('.time');
 let calendar = document.querySelector('.date');
 let greeting = document.querySelector('.greeting');
-let greetingContainer = document.querySelector('.greeting-container');
 let body = document.querySelector('.tv');
 let slideNext = document.querySelector('.slide-next');
 let slidePrev = document.querySelector('.slide-prev');
@@ -29,15 +28,17 @@ let cake = document.querySelector('.cake');
 let ruLang = false;
 let enLang = true;
 
+
+
 //CANVAS
 let imgCanvas = new Image();
-
+let scale = 1;
 function scaleToFill(img, ctx) {
 	// get the scale
-	var scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+	scale = Math.max(canvas.width / img.width, canvas.height / img.height);
 	// get the top left position of the image
-	var x = (canvas.width / 2) - (img.width / 2) * scale;
-	var y = (canvas.height / 2) - (img.height / 2) * scale;
+	let x = (canvas.width / 2) - (img.width / 2) * scale;
+	let y = (canvas.height / 2) - (img.height / 2) * scale;
 	ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
 }
 
@@ -47,6 +48,18 @@ let context = canvas.getContext("2d");
 //canvas.height = document.body.clientHeight;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+//const scaleWindow = window.devicePixelRatio;
+// Change to 1 on retina screens to see blurry canvas.
+//console.log(scaleWindow);
+//canvas.width = Math.floor(canvas.width * scaleWindow);
+//canvas.height = Math.floor(canvas.height * scaleWindow);
+
+// Normalize coordinate system to use CSS pixels.
+//context.scale(scaleWindow, scaleWindow);
+
+
+
 imgCanvas.onload = function () {
 	// context.drawImage(imgCanvas, 0, 0, canvas.width, canvas.height);
 	scaleToFill(this, context);
@@ -205,8 +218,9 @@ function setBg() {
 	// canvas.height = 300;
 	//let bodyurl = `url('./assets/img/babies/${bgNum}.jpg')`;
 	let bodyurll = `./assets/img/babies/${bgNum}.jpg`;
-	var x = (canvas.width / 2) - (620 / 2);
-	var y = (canvas.height / 2) - (520 / 2);
+
+	let x = (canvas.width / 2) - (620 / 2);
+	let y = (canvas.height / 2) - (520 / 2);
 	img.onload = function () {
 		//contextTv.drawImage(img, 0, 0, 600, 400);
 		context.drawImage(img, x, y, 620, 340);// drawImage(img, x, y);
@@ -375,14 +389,14 @@ switcherInput[2].addEventListener("change", function () {
 	transition: opacity 3s ease 0s`;
 	}
 })
-switcherInput[3].addEventListener("change", function () {
-	if (!switcherInput[3].checked) {
-		greetingContainer.style.cssText = `opacity:0;transition: opacity 3s ease 0s`;
-	} else {
-		greetingContainer.style.cssText = `opacity:1; 
-	transition: opacity 3s ease 0s`;
-	}
-})
+// switcherInput[3].addEventListener("change", function () {
+// 	if (!switcherInput[3].checked) {
+// 		greetingContainer.style.cssText = `opacity:0;transition: opacity 3s ease 0s`;
+// 	} else {
+// 		greetingContainer.style.cssText = `opacity:1; 
+// 	transition: opacity 3s ease 0s`;
+// 	}
+// })
 switcherInput[4].addEventListener("change", function () {
 	if (!switcherInput[4].checked) {
 		footerQuote.style.cssText = `opacity:0;transition: opacity 3s ease 0s`;
