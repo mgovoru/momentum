@@ -29,6 +29,7 @@ let cake = document.querySelector('.cake');
 let ruLang = false;
 let enLang = true;
 
+window.getDevicePixelRatio = 1;
 //CANVAS
 let imgCanvas = new Image();
 
