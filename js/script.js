@@ -20,7 +20,7 @@ let switcherWeather = document.querySelector('.switcher__weather');
 let weather = document.querySelector('.weather');
 let switcherInput = document.querySelectorAll('.switcher__input');
 let switcherText = document.querySelectorAll('.switcher__text');
-let footerQuote = document.querySelector('.footer__quote');
+let footerQuote = document.querySelector('.footer__quotes');
 let player = document.querySelector('.player');
 let namePlay = document.querySelector('.name-play');
 let volumeButton = document.querySelector('.volume-button');
@@ -157,29 +157,23 @@ window.addEventListener('load', getLocalStorage);
 
 // функции пролистывая слайдов вперед и назад
 function getSlideNext() {
-	if (bgNum != 0) {
 		bgNum++;
-		setBg();
-		opacityCake = opacityCake + 0.1;
+	if (bgNum > 21) {
+		bgNum = 0; setBg(); opacityCake = opacityCake + 0.1;
 		cake.style.cssText = `opacity: ${opacityCake}`;
 		cake.style.backgroundImage = 'url(./assets/img/3.png)';
-		if (bgNum > 21) { bgNum = 1; }
-	}
-	else {
-		bgNum = 1; setBg(); opacityCake = opacityCake + 0.1;
+	} else {
+		setBg();
+		opacityCake = opacityCake + 0.1;
 		cake.style.cssText = `opacity: ${opacityCake}`;
 		cake.style.backgroundImage = 'url(./assets/img/3.png)';
 	}
 }
 function getSlidePrev() {
-	if (bgNum != 0) {
-		bgNum--;
-		setBg();
-		if (bgNum < 0) { bgNum = 21; }
-	}
-	else { bgNum = 21; setBg(); }
+		bgNum--;	
+	if (bgNum < 0) { bgNum = 21; }
+	setBg(); }
 
-}
 
 // проверяем из какого источника фотографии
 slideNext.addEventListener('click', () => {
@@ -210,24 +204,13 @@ slidePrev.addEventListener('click', () => {
 
 function setBg() {
 	let img = new Image();
-	// let canvas = document.querySelector('.wrapper__tv');
-	// let contextTv = canvas.getContext("2d");
-	// canvas.width = 620; 
-	// canvas.height = 300;
-	//let bodyurl = `url('./assets/img/babies/${bgNum}.jpg')`;
 	let bodyurll = `./assets/img/babies/${bgNum}.jpg`;
-
 	let x = (canvas.width / 2) - (620 / 2);
 	let y = (canvas.height / 2) - (520 / 2);
 	img.onload = function () {
-		//contextTv.drawImage(img, 0, 0, 600, 400);
 		context.drawImage(img, x, y, 620, 340);// drawImage(img, x, y);
 	}
 	img.src = bodyurll;
-	// img.addEventListener('load', () => {
-	// 	body.style.backgroundImage = bodyurl;
-	// });
-
 }
 
 let ln;
@@ -270,13 +253,13 @@ getWeather();
 
 //определение случайного числа
 function getRandomNumten() {
-	return Math.floor(Math.random() * 72);
+	return Math.floor(Math.random() * 10);
 }
 
 let dNum = getRandomNumten();
 
 function getRandomNumRus() {
-	return Math.floor(Math.random() * 10);
+	return Math.floor(Math.random() * 17);
 }
 
 //функция получения цитаты
@@ -301,13 +284,14 @@ change.addEventListener('click', () => {
 async function getLinkToImage() {
 	let imgUnsplash = new Image();
 	let url = 'https://api.unsplash.com/photos/random?query=babies&client_id=_GKm-85EgvvGnsPpemOrhLZbu64Li5HoZyf1GY98QCk';
-	let urll = `url('https://api.unsplash.com/photos/random?query=babies&client_id=_GKm-85EgvvGnsPpemOrhLZbu64Li5HoZyf1GY98QCk')`;
 	const res = await fetch(url);
 	const datat = await res.json();
 	imgUnsplash.src = datat.urls.regular;
-	imgUnsplash.addEventListener('load', () => {
-		body.style.backgroundImage = `url(${imgUnsplash.src})`;
-	});
+	let x = (canvas.width / 2) - (620 / 2);
+	let y = (canvas.height / 2) - (520 / 2);
+	imgUnsplash.onload = function () {
+		context.drawImage(imgUnsplash, x, y, 620, 340);// drawImage(img, x, y);
+	}
 }
 
 // фотографии из источника flickr
@@ -315,15 +299,16 @@ async function getLinkToImage() {
 async function getLinkToImageFlickr() {
 	let imgFlickr = new Image();
 	let urlFlickr = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d69b5e2c05af4947127492602040536f&tags=babies&extras=url_l&format=json&nojsoncallback=1`;
-	let urllFlickr = `url('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d69b5e2c05af4947127492602040536f&tags=babies&extras=url_l&format=json&nojsoncallback=1')`;
 	const res = await fetch(urlFlickr);
 	const datat = await res.json();
 	let arr = datat.photos.photo;
 	let m = Math.floor(Math.random() * datat.photos.photo.length);
 	imgFlickr.src = arr[m].url_l;
-	imgFlickr.addEventListener('load', () => {
-		body.style.backgroundImage = `url(${arr[m].url_l})`;
-	});
+	let x = (canvas.width / 2) - (620 / 2);
+	let y = (canvas.height / 2) - (520 / 2);
+	imgFlickr.onload = function () {
+		context.drawImage(imgFlickr, x, y, 620, 340);// drawImage(img, x, y);
+	}
 }
 
 // функция перевода настроек на английский
@@ -387,14 +372,14 @@ switcherInput[2].addEventListener("change", function () {
 	transition: opacity 3s ease 0s`;
 	}
 })
-// switcherInput[3].addEventListener("change", function () {
-// 	if (!switcherInput[3].checked) {
-// 		greetingContainer.style.cssText = `opacity:0;transition: opacity 3s ease 0s`;
-// 	} else {
-// 		greetingContainer.style.cssText = `opacity:1; 
-// 	transition: opacity 3s ease 0s`;
-// 	}
-// })
+switcherInput[3].addEventListener("change", function () {
+	if (!switcherInput[3].checked) {
+		greeting.style.cssText = `opacity:0;transition: opacity 3s ease 0s`;
+	} else {
+		greeting.style.cssText = `opacity:1; 
+	transition: opacity 3s ease 0s`;
+	}
+})
 switcherInput[4].addEventListener("change", function () {
 	if (!switcherInput[4].checked) {
 		footerQuote.style.cssText = `opacity:0;transition: opacity 3s ease 0s`;
