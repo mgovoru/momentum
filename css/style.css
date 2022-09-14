@@ -25,7 +25,7 @@ body {
   flex-direction: column;
 }
 .wrapper__cover {
-  max-width: 100%;
+  width: 100%;
   height: 100vh;
   position: absolute;
   top: 0;
@@ -211,7 +211,7 @@ body {
 .main {
   flex: 1 1 100%;
   width: 100%;
-  padding: 20px;
+  padding: 20px; 
 }
 .main__container {
   position: relative;
@@ -250,7 +250,20 @@ body {
   min-height: 28px;
   font-size: 16px;
 }
-
+@media (max-width: 1230px) {
+  .main {
+    display: flex;
+    justify-content: center;
+  }
+  .main__container {
+    align-self: flex-end;
+    color: black;
+    padding-bottom: 70px;
+  }
+  .date {
+    min-height: 0;
+  }
+}
 .main__greeting {
   font-size: 32px;
 }
@@ -288,21 +301,27 @@ body {
   color: white;
   font-weight: 700;
   width: 900px;
+  justify-content: space-between;
   align-items: center;
   gap: 8px;
 }
 .quote {
   width: 820px;
 }
-
-@media (max-width: 554px) {
-  .footer {
-    padding: 20px 20px 70px 20px;
-    flex: 0 0 auto;
+@media (max-width: 1024px) {
+  .footer__quotes {justify-content: center;}
+  .quote {
+    width: 520px;
   }
+}
+@media (max-width: 749px){  .footer__quotes  {
+    display: none;
+  }}
+@media (max-width: 554px) {
   .footer__empty {
     display: none;
   }
+
 }
 .change-quote {
   min-width: 45px;
@@ -328,12 +347,12 @@ body {
 }
 .pop {
   display: none;
-  padding: 15px 20px 5px 20px;
+  padding: 10px 20px 10px 20px;
   position: absolute;
   bottom: 20px;
   left: 70px;
-  width: 400px;
-  height: 450px;
+  width: 360px;
+  height: 440px;
   background-color: transparent;
   box-shadow: 0 0 3px 0 white;
   border-radius: 20px;
@@ -399,11 +418,18 @@ body {
 
 @media (max-width: 1320px) {
   .pop {
-    background-color: darkgrey;
+    color:black;
+    background-color: rgb(237,237,234);
+      border: 2px solid black;
   }
+  .switcher__label {
+  border: 2px solid black;
+}
+.switcher__label::before {
+  border: 2px solid black;}
 }
 @media (max-width: 792px) {
-  .time {
+  /* .time {
     min-height: 80px;
     font-size: 72px;
   }
@@ -411,7 +437,7 @@ body {
   .greeting-container {
     min-height: 40px;
     font-size: 32px;
-  }
+  } */
   .play-list {
     display: none;
   }
@@ -429,13 +455,13 @@ body {
   }
 }
 @media (max-width: 450px) {
-  .greeting-container {
+  /* .greeting-container {
     min-height: 30px;
     font-size: 20px;
   }
   .name {
     font-size: 20px;
-  }
+  } */
 }
 .audio-player {
   margin-right: auto;
