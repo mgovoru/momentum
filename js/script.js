@@ -28,8 +28,6 @@ let cake = document.querySelector('.cake');
 let ruLang = false;
 let enLang = true;
 
-
-
 //CANVAS
 let imgCanvas = new Image();
 let scale = 1;
