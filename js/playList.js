@@ -1,10 +1,5 @@
 const playList = [
 	{
-		title: 'I Like Peanuts',
-		src: './assets/sounds/ILikePeanuts.mp3',
-		duration: '01:25'
-	},
-	{
 		title: 'Jumpin Boogie Woogie',
 		src: './assets/sounds/JumpinBoogieWoogie.mp3',
 		duration: '03:02'
@@ -26,7 +21,7 @@ const playList = [
 	},
 	{
 		title: 'Romantic Folk Loop',
-		src: './assets/sounds/Summer Wind.mp3',
+		src: './assets/sounds/RomanticFolkLoop.mp3',
 		duration: '00:36'
 	}
 ]
